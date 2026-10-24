@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart FIR System - Digital Law Enforcement & Legal Pipeline</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ChartJS for stats graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF for direct PDF compilation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- 1. LANDING SCREEN (Main Portal Entry) -->
+    <div id="landing-screen" class="landing-container">
+        <header class="landing-header">
+            <div class="landing-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Smart FIR System</span>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary btn-login-trigger" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">Login</button>
+                <button class="btn btn-primary btn-register-trigger" style="padding: 0.5rem 1.25rem; font-size: 0.85rem;">Register</button>
+            </div>
+        </header>
+
+        <main class="landing-hero">
+            <div class="gov-badge">
+                <i class="fas fa-circle-notch animate-pulse text-indigo-400"></i>
+                <span>Digital FIR System — Government of India</span>
+            </div>
+            <h1>Smart Complaint &<br><span>FIR Generator</span></h1>
+            <p>
+                Complete end-to-end digital complaint system. AI-powered NLP processing, IPC section mapping, emotion detection, crime classification, age & priority detection, investigation with face recognition, charge sheet generation, court trial, verdict prediction — all in one portal.
+            </p>
+            <div class="landing-buttons">
+                <button class="btn btn-primary btn-register-trigger" style="padding: 1rem 2rem;">
+                    <i class="fas fa-user-plus"></i> Register & File Complaint
+                </button>
+                <button class="btn btn-secondary btn-login-trigger" style="padding: 1rem 2rem;">
+                    <i class="fas fa-cubes"></i> Admin Login
+                </button>
+            </div>
+        </main>
+
+        <section class="workflow-section">
+            <h3 class="workflow-section-title">
+                <i class="fas fa-network-wired text-indigo-500"></i> Complete Case Processing Workflow
+            </h3>
+            <div class="workflow-grid">
+                <!-- Row 1 -->
+                <div class="wf-card active" id="wf-start">
+                    <i class="fas fa-play-circle"></i>
+                    <span>START</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Register / Login</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-complaint">
+                    <i class="fas fa-keyboard"></i>
+                    <span>Complaint</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-nlp">
+                    <i class="fas fa-brain"></i>
+                    <span>NLP Processing</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-crime">
+                    <i class="fas fa-filter"></i>
+                    <span>ML Classification</span>
+                </div>
+
+                <!-- Connect Row 1 to Row 2 -->
+                <div class="wf-card" id="wf-age">
+                    <i class="fas fa-user-clock"></i>
+                    <span>Age Detection</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-priority">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>Priority Detection</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-ipc">
+                    <i class="fas fa-gavel"></i>
+                    <span>IPC Mapping</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-csr">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>CSR Generation</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-fir">
+                    <i class="fas fa-file-shield"></i>
+                    <span>FIR Generation</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-storage">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Evidence Upload</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-admin">
+                    <i class="fas fa-lock"></i>
+                    <span>Admin Dashboard</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-investigation">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <span>Investigation</span>
+                </div>
+
+                <!-- Connect Row 2 to Row 3 -->
+                <div class="wf-card" id="wf-evidence">
+                    <i class="fas fa-images"></i>
+                    <span>Evidence (CCTV)</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-face">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>Face Recognition</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-chargesheet">
+                    <i class="fas fa-file-signature"></i>
+                    <span>Charge Sheet</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-courtsub">
+                    <i class="fas fa-building-columns"></i>
+                    <span>Court Submission</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-trial">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>Court Trial</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-judgment">
+                    <i class="fas fa-gavel"></i>
+                    <span>Verdict Predict</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-tracking">
+                    <i class="fas fa-route"></i>
+                    <span>Case Tracking</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-notif">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="wf-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="wf-card" id="wf-end">
+                    <i class="fas fa-stop-circle"></i>
+                    <span>END</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 2. SECURE LOGIN PORTAL (Initially Hidden) -->
+    <div id="login-screen" class="login-wrapper hidden">
+        <div class="login-card">
+            <div class="login-icon-box">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            
+            <h2 style="text-align: center; color: #ffffff; font-weight: 800; font-size: 1.6rem; margin-bottom: 0.25rem;">Smart FIR Portal</h2>
+            <p style="text-align: center; color: var(--color-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Digital Law Enforcement System — India</p>
+
+            <!-- Toggle between Citizen/User and Officer/Admin -->
+            <div class="login-toggle">
+                <button type="button" id="toggle-user-login" class="login-toggle-btn active">
+                    <i class="fas fa-user"></i> User Login
+                </button>
+                <button type="button" id="toggle-admin-login" class="login-toggle-btn">
+                    <i class="fas fa-user-shield"></i> Admin Login
+                </button>
+            </div>
+
+            <!-- Login form inputs -->
+            <form id="login-form">
+                <!-- User input fields -->
+                <div id="user-login-fields">
+                    <div class="form-group">
+                        <label for="login-phone">Phone Number *</label>
+                        <input type="text" id="login-phone" class="form-control" placeholder="Registered 10-digit number" value="9876543289">
+                    </div>
+                </div>
+
+                <!-- Admin input fields (hidden initially) -->
+                <div id="admin-login-fields" class="hidden">
+                    <div class="form-group">
+                        <label for="login-officer-id">Officer ID *</label>
+                        <input type="text" id="login-officer-id" class="form-control" placeholder="e.g. ADMIN_01" value="ADMIN_01">
+                    </div>
+                </div>
+
+                <!-- General Password field -->
+                <div class="form-group">
+                    <label for="login-password">Password *</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Your password" value="pass123">
+                </div>
+
+                <!-- Help details for Admin prefill -->
+                <div id="admin-demo-box" class="demo-help-box hidden">
+                    Demo credentials: <strong style="color: #ffffff;">ADMIN_01 / pass123</strong>
+                </div>
+
+                <button type="submit" id="btn-submit-login" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Login & File Complaint
+                </button>
+            </form>
+            
+            <button class="btn btn-secondary" id="btn-back-to-landing" style="width: 100%; margin-top: 0.75rem; font-size: 0.85rem; padding: 0.5rem;">
+                Back to Landing
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. MAIN WORKSPACE (Initially Hidden) -->
+    <div id="app-workspace" class="workspace-wrapper hidden">
+        
+        <!-- Workspace Header -->
+        <header class="top-header">
+            <div class="top-header-left">
+                <i class="fas fa-shield-halved"></i>
+                <span>Smart FIR System</span>
+            </div>
+            
+            <div class="top-header-right">
+                <!-- Dynamic profile badge -->
+                <div class="user-badge" id="header-user-pill">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="header-username">venkat</span>
+                    <span class="user-badge-role" id="header-role-tag">USER</span>
+                </div>
+                
+                <button class="btn btn-secondary" id="btn-workspace-mycases" style="padding: 0.4rem 0.80rem; font-size: 0.8rem; border-radius: 8px;">
+                    <i class="fas fa-list-check"></i> My Cases
+                </button>
+                
+                <div class="notif-bell" id="bell-notif-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-counter">1</span>
+                </div>
+                
+                <button class="btn btn-secondary" id="btn-logout-action" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 8px; border-color: rgba(239,68,68,0.25); color: #ff8a8a;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Horizontal Tabbed Pipeline Steps -->
+        <div class="tabs-container">
+            <ul class="tabs-list">
+                <li class="tab-item active" data-tab="1" id="tab-1">
+                    <span>1</span> Complaint
+                </li>
+                <li class="tab-item" data-tab="2" id="tab-2">
+                    <span>2</span> NLP & ML
+                </li>
+                <li class="tab-item" data-tab="3" id="tab-3">
+                    <span>3</span> CSR
+                </li>
+                <li class="tab-item" data-tab="4" id="tab-4">
+                    <span>4</span> FIR
+                </li>
+                <li class="tab-item" data-tab="5" id="tab-5">
+                    <span>5</span> Investigation
+                </li>
+                <li class="tab-item" data-tab="6" id="tab-6">
+                    <span>6</span> Charge Sheet
+                </li>
+                <li class="tab-item" data-tab="7" id="tab-7">
+                    <span>7</span> Court
+                </li>
+                <li class="tab-item" data-tab="8" id="tab-8">
+                    <span>8</span> Verdict
+                </li>
+                <li class="tab-item" data-tab="9" id="tab-9">
+                    <span>9</span> Tracking
+                </li>
+            </ul>
+        </div>
+
+        <!-- Dynamic workspace panel pages -->
+        <main class="workspace-main">
+
+            <!-- TAB 1: COMPLAINT FORM -->
+            <div id="panel-tab-1" class="tab-panel">
+                <!-- User Details Card -->
+                <div class="glass-panel">
+                    <h3 class="glass-panel-title"><i class="fas fa-user-circle"></i> User Details <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: normal; margin-left: 0.5rem;">Your personal information</span></h3>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="comp-fullname">Full Name *</label>
+                            <input type="text" id="comp-fullname" class="form-control" value="venkat">
+                        </div>
+                        <div class="form-group">
+                            <label for="comp-phone">Phone Number *</label>
+                            <input type="text" id="comp-phone" class="form-control" value="9876543289">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incident Details Card -->
+                <div class="glass-panel">
+                    <h3 class="glass-panel-title"><i class="fas fa-calendar-alt"></i> Incident Details <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: normal; margin-left: 0.5rem;">When and where it happened</span></h3>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="comp-date">Date of Incident *</label>
+                            <input type="date" id="comp-date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="comp-time">Time of Incident *</label>
+                            <input type="time" id="comp-time" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="comp-location">Location *</label>
+                        <input type="text" id="comp-location" class="form-control" placeholder="Street, Area, City" value="Hyderabad">
+                    </div>
+                </div>
+
+                <!-- Incident Description Card -->
+                <div class="glass-panel">
+                    <h3 class="glass-panel-title"><i class="fas fa-keyboard"></i> Incident Description * <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: normal; margin-left: 0.5rem;">(Text or use Voice)</span></h3>
+                    <div style="position: relative;">
+                        <textarea id="complaint-text" class="form-control" placeholder="Describe what happened in detail..." style="min-height: 140px; padding-right: 3.5rem;"></textarea>
+                        <button type="button" id="voice-input-btn" class="btn btn-dictate" style="position: absolute; right: 1rem; bottom: 1rem;">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                    </div>
+                    <div id="voice-listening-label" class="hidden" style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-danger); font-weight: bold;">
+                        <i class="fas fa-dot-circle animate-pulse"></i> Listening... Speak now
+                    </div>
+                </div>
+
+                <!-- Crime Type Selector -->
+                <div class="glass-panel">
+                    <div class="toggle-bar" style="flex-wrap: wrap; gap: 1rem;">
+                        <h3 class="glass-panel-title" style="margin-bottom:0;"><i class="fas fa-tags"></i> Crime / Dispute Type <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: normal; margin-left: 0.5rem;">Select or let AI auto-detect</span></h3>
+                        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">AI Auto-Detect Category</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle-ai-detect" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; border-left: 1px solid var(--border-color); padding-left: 1.5rem;">
+                                <span style="font-size: 0.8rem; color: #f87171; font-weight: 600;"><i class="fas fa-heart-pulse"></i> Force Empathy Protocol</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle-empathy-mode" class="empathy-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Buttons Grid -->
+                    <div class="crime-type-grid" id="crime-grid-selector">
+                        <button type="button" class="crime-cell-btn active" data-class="Theft">Theft</button>
+                        <button type="button" class="crime-cell-btn" data-class="Robbery">Robbery</button>
+                        <button type="button" class="crime-cell-btn" data-class="Assault">Assault</button>
+                        <button type="button" class="crime-cell-btn" data-class="Grievous Hurt">Grievous Hurt</button>
+                        <button type="button" class="crime-cell-btn" data-class="Fraud / Cheating">Fraud / Cheating</button>
+                        <button type="button" class="crime-cell-btn" data-class="Murder / Homicide">Murder / Homicide</button>
+                        <button type="button" class="crime-cell-btn" data-class="Cyber Crime">Cyber Crime</button>
+                        <button type="button" class="crime-cell-btn" data-class="Domestic Violence">Domestic Violence</button>
+                        <button type="button" class="crime-cell-btn" data-class="Kidnapping / Abduction">Kidnapping / Abduction</button>
+                        <button type="button" class="crime-cell-btn" data-class="Sexual Harassment">Sexual Harassment</button>
+                    </div>
+                    <div style="margin-top:1rem;">
+                        <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; color:var(--accent-cyan); font-weight:700; display:block; margin-bottom:0.75rem;"><i class="fas fa-landmark"></i> Civil Cases (CPC)</span>
+                        <div class="crime-type-grid" id="civil-grid-selector">
+                            <button type="button" class="crime-cell-btn civil" data-class="Property Dispute">Property Dispute</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Divorce / Family">Divorce / Family</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Consumer Complaint">Consumer Complaint</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Landlord-Tenant">Landlord-Tenant</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Employment / Labour">Employment / Labour</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Defamation">Defamation</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Contract Breach">Contract Breach</button>
+                            <button type="button" class="crime-cell-btn civil" data-class="Intellectual Property">Intellectual Property</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evidence Dropzone -->
+                <div class="glass-panel">
+                    <h3 class="glass-panel-title"><i class="fas fa-paperclip"></i> Evidence Upload</h3>
+                    <input type="file" id="evidence-upload-raw" multiple style="display: none;">
+                    <div class="upload-dropzone" onclick="document.getElementById('evidence-upload-raw').click()">
+                        <i class="fas fa-folder-open"></i>
+                        <p>Click to upload or drag & drop</p>
+                        <span>Supports JPG, PNG, PDF, MP4, DOC (Max 10 MB)</span>
+                    </div>
+                    <div id="uploaded-files-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;"></div>
+                </div>
+
+                <!-- Form Submit action -->
+                <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="btn-clear-complaint">Clear Form</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit-complaint">
+                        <i class="fas fa-cogs"></i> Submit for NLP Processing
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: NLP PROCESSING VIEW -->
+            <div id="panel-tab-2" class="tab-panel hidden">
+                <div class="glass-panel" style="max-width: 650px; margin: 0 auto; text-align: center; padding: 3rem 2rem;">
+                    <i class="fas fa-brain text-indigo-500 animate-pulse" style="font-size: 4rem; margin-bottom: 2rem;"></i>
+                    <h2 style="color: #ffffff; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.5rem;">Running NLP & Machine Learning</h2>
+                    <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 2.5rem;">Processing complaint details, identifying penal codes, age constraints, and triage factors...</p>
+                    
+                    <div class="pipeline-steps-wrapper" style="text-align: left; max-width: 480px; margin: 0 auto;">
+                        <div id="wf-step-nlp-parser" class="pipeline-step active">
+                            <span>1. NLP Text Understanding</span>
+                            <span class="step-status"><i class="fas fa-spinner animate-spin"></i> Executing</span>
+                        </div>
+                        <div id="wf-step-ml-classifier" class="pipeline-step">
+                            <span>2. Crime Intent Classification</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                        <div id="wf-step-age-detector" class="pipeline-step">
+                            <span>3. Age Group Extraction</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                        <div id="wf-step-priority-triage" class="pipeline-step">
+                            <span>4. Severity Level Triaging</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                        <div id="wf-step-ipc-mapper" class="pipeline-step">
+                            <span>5. Penal IPC / CPC Code Mapping</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                        <div id="wf-step-empathy-detect" class="pipeline-step">
+                            <span>6. Empathy & Sensitivity Detection</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CSR SUMMARY RECEIPT -->
+            <div id="panel-tab-3" class="tab-panel hidden">
+                <div class="csr-title-header">
+                    <h2>Case Summary Record (CSR)</h2>
+                    <p style="color: var(--color-muted); font-size: 0.9rem; margin-top: 0.25rem;">Initial complaint recorded. Review before FIR generation.</p>
+                </div>
+
+                <div class="csr-receipt">
+                    <div class="csr-receipt-header">
+                        <div>
+                            <h3 style="color: #ffffff; font-weight: 800; font-size: 1.25rem;">CSR Digital Receipt</h3>
+                            <span style="font-size: 0.8rem; color: var(--color-muted);" id="csr-receipt-timestamp">Timestamp: 5/1/2026, 10:50:44 AM</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="csr-label">CSR NUMBER</span>
+                            <h3 class="font-mono" style="color: var(--accent-cyan); font-weight: 800; font-size: 1.3rem;" id="csr-receipt-number">CSR/6582</h3>
+                        </div>
+                    </div>
+
+                    <div class="csr-receipt-grid">
+                        <div class="csr-field">
+                            <span class="csr-label">Complainant</span>
+                            <span class="csr-val" id="csr-val-complainant">venkat</span>
+                        </div>
+                        <div class="csr-field">
+                            <span class="csr-label">Phone</span>
+                            <span class="csr-val" id="csr-val-phone">9876543289</span>
+                        </div>
+                        <div class="csr-field">
+                            <span class="csr-label">Location</span>
+                            <span class="csr-val" id="csr-val-location">Hyderabad</span>
+                        </div>
+                        <div class="csr-field">
+                            <span class="csr-label">Crime Type</span>
+                            <span class="csr-val" id="csr-val-crimetype">Theft</span>
+                        </div>
+                        <div class="csr-field">
+                            <span class="csr-label">Age Detection</span>
+                            <span id="csr-val-age"></span>
+                        </div>
+                        <div class="csr-field">
+                            <span class="csr-label">Priority</span>
+                            <span id="csr-val-priority"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                        <label for="csr-statement-edit" style="color: var(--color-muted);">Recorded Statement</label>
+                        <textarea id="csr-statement-edit" class="form-control" style="background: rgba(0,0,0,0.25); min-height: 80px;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2.5rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="btn-csr-edit">Edit Details</button>
+                        <button type="button" class="btn btn-primary" id="btn-csr-approve">
+                            Generate Official FIR <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FIR REGISTERED VIEW -->
+            <div id="panel-tab-4" class="tab-panel hidden">
+                <div class="glass-panel" style="max-width: 750px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary-blue); padding-bottom: 1rem; margin-bottom: 2rem;">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: 700; text-transform: uppercase;">GOVERNMENT OF INDIA</span>
+                            <h2 style="color: #ffffff; font-weight: 800; font-size: 1.4rem;">FIRST INFORMATION REPORT (FIR)</h2>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 0.75rem; color: var(--color-muted); display: block;">FIR NUMBER</span>
+                            <span class="font-mono" style="color: var(--accent-purple); font-weight: 800; font-size: 1.25rem;" id="fir-val-number">FIR/1004</span>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; font-size: 0.9rem;">
+                        <div><span style="color: var(--color-muted);">Filing Station:</span> <strong style="color: #fff;">Sector-12 Cyber & Crime Branch</strong></div>
+                        <div><span style="color: var(--color-muted);">District:</span> <strong style="color: #fff;">Metro West</strong></div>
+                        <div><span style="color: var(--color-muted);">Under CSR ID:</span> <strong id="fir-val-csrid" style="color: #fff; font-family: monospace;"></strong></div>
+                        <div><span style="color: var(--color-muted);">Registration Date:</span> <strong id="fir-val-date" style="color: #fff;"></strong></div>
+                    </div>
+
+                    <div class="form-group" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                        <label>Extracted Incident Facts</label>
+                        <div id="fir-val-facts" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; line-height: 1.5;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Statutory Applied Penal Sections</label>
+                        <div id="fir-val-ipc" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;"></div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 3rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="btn-fir-download"><i class="fas fa-file-pdf text-red-500"></i> Download FIR PDF</button>
+                        <button type="button" class="btn btn-primary" id="btn-fir-proceed">Proceed to Investigation <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: INVESTIGATION PROCESS -->
+            <div id="panel-tab-5" class="tab-panel hidden">
+                <!-- Empathy Alert Banner -->
+                <div id="inv-empathy-banner" class="hidden" style="background:linear-gradient(135deg, rgba(239,68,68,0.12), rgba(168,85,247,0.08)); border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; display:flex; gap:1rem; align-items:center;">
+                    <div style="width:48px; height:48px; border-radius:50%; background:rgba(239,68,68,0.15); display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#ef4444; flex-shrink:0;">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <div>
+                        <h4 style="color:#ef4444; font-weight:800; font-size:1rem; margin-bottom:0.2rem;"><i class="fas fa-shield-heart"></i> Empathetic Case Mode Activated</h4>
+                        <p style="color:#f87171; font-size:0.8rem;">This case involves emotional distress indicators. Sensitive handling protocols enabled. Victim support and counseling auto-notified.</p>
+                        <div style="margin-top:0.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;" id="inv-empathy-keywords-display"></div>
+                    </div>
+                    <div style="text-align:right; flex-shrink:0;">
+                        <span style="font-size:0.7rem; color:var(--color-muted); display:block;">EMPATHY SCORE</span>
+                        <span id="inv-empathy-score" style="font-size:1.5rem; font-weight:900; color:#ef4444;">0</span>
+                    </div>
+                </div>
+
+                <!-- Case Type Badge -->
+                <div id="inv-case-type-badge" style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(90,92,245,0.1); border:1px solid rgba(90,92,245,0.25); border-radius:8px; padding:0.4rem 1rem; margin-bottom:1rem; font-size:0.8rem; font-weight:700;">
+                    <i class="fas fa-gavel" style="color:var(--primary-blue);"></i>
+                    <span id="inv-case-type-label" style="color:var(--primary-blue);">CRIMINAL CASE (IPC)</span>
+                </div>
+
+                <div class="grid-3">
+                    <!-- Left column -->
+                    <div class="glass-panel">
+                        <h3 class="glass-panel-title"><i class="fas fa-folder-tree"></i> Forensics & Evidence Registry</h3>
+                        <div class="form-group">
+                            <label>CCTV & Photo Exhibits</label>
+                            <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem;">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.85rem;"><i class="fas fa-video" style="color:#60a5fa; margin-right:0.5rem;"></i>CCTV_Footage_Terminal.mp4</span>
+                                    <span style="font-size:0.75rem; color:var(--color-success);"><i class="fas fa-lock"></i> Encrypted</span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
+                                    <span style="font-size:0.85rem;"><i class="fas fa-image" style="color:#60a5fa; margin-right:0.5rem;"></i>Suspect_Mugshot_ExhibitA.jpg</span>
+                                    <span style="font-size:0.75rem; color:var(--color-success);"><i class="fas fa-lock"></i> Encrypted</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Assigned Case Details</label>
+                            <div style="background:var(--bg-card-sub); padding:1rem; border-radius:8px; font-size:0.85rem; line-height:1.6;">
+                                <div><span style="color:var(--color-muted);">Case Reference:</span> <strong id="inv-case-ref" style="color:#fff;"></strong></div>
+                                <div><span style="color:var(--color-muted);">Complainant:</span> <strong id="inv-complainant-name" style="color:#fff;"></strong></div>
+                                <div><span style="color:var(--color-muted);">Statutory Crime:</span> <strong id="inv-crime-type" style="color:#fff;"></strong></div>
+                            </div>
+                        </div>
+                        <!-- INTERROGATION Q&A SECTION -->
+                        <div class="form-group" style="margin-top:1.5rem;">
+                            <h4 style="color:#ffffff; font-weight:700; font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                                <i class="fas fa-comments" style="color:var(--accent-cyan);"></i> Investigation Q&A (Auto-Generated)
+                            </h4>
+                            <div id="inv-qa-container" style="display:flex; flex-direction:column; gap:0.75rem;"></div>
+                        </div>
+                    </div>
+                    <!-- Right Column -->
+                    <div class="glass-panel">
+                        <h3 class="glass-panel-title"><i class="fas fa-fingerprint"></i> Biometric Suspect Scan</h3>
+                        <div id="inv-unscanned-box" style="text-align:center; padding:2rem 1rem;">
+                            <span style="font-size:3rem; color:var(--primary-blue);"><i class="fas fa-camera"></i></span>
+                            <h4 style="margin-top:1rem; color:#ffffff;">Biometric Identification Required</h4>
+                            <p style="font-size:0.8rem; color:var(--color-muted); margin-top:0.5rem; margin-bottom:2rem;">Scan camera mugshots database to identify the registered suspect profile.</p>
+                            <button type="button" class="btn btn-primary" id="btn-trigger-facescan">Run Face Recognition</button>
+                        </div>
+                        <div id="inv-scanning-box" class="hidden" style="text-align:center;">
+                            <h4 style="color:var(--accent-cyan); font-weight:800; margin-bottom:1rem;">BIOMETRIC RASTER SCANNING...</h4>
+                            <canvas id="scan-canvas" style="display:block; margin:0 auto 1.5rem; max-width:100%;"></canvas>
+                        </div>
+                        <div id="inv-scanned-box" class="hidden">
+                            <div style="display:flex; gap:1rem; align-items:center; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); padding:1rem; border-radius:12px;">
+                                <div style="width:54px; height:54px; border-radius:50%; background:#2a3b32; color:var(--color-success); display:flex; align-items:center; justify-content:center; font-size:1.5rem;">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div style="flex-grow:1;">
+                                    <div style="display:flex; justify-content:space-between;">
+                                        <h4 id="inv-sus-name" style="color:#fff; font-weight:700;"></h4>
+                                        <span id="inv-sus-conf" class="badge-priority-low" style="background:rgba(16,185,129,0.2);"></span>
+                                    </div>
+                                    <p id="inv-sus-details" style="font-size:0.8rem; color:var(--color-muted); margin-top:0.2rem;"></p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="btn-inv-generate-cs" style="width:100%; margin-top:2rem; background:linear-gradient(135deg, var(--accent-purple), #7e22ce);">
+                                Generate Official Charge Sheet <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: CHARGE SHEET VIEW -->
+            <div id="panel-tab-6" class="tab-panel hidden">
+                <div class="glass-panel" style="max-width: 850px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent-purple); padding-bottom: 1rem; margin-bottom: 2rem;">
+                        <div>
+                            <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: 700; text-transform: uppercase;">MAGISTRATE COURT OF JURISDICTION</span>
+                            <h2 style="color: #ffffff; font-weight: 800; font-size: 1.4rem;" id="cs-doc-title">OFFICIAL CRIMINAL CHARGE SHEET</h2>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 0.75rem; color: var(--color-muted); display: block;">CHARGE SHEET ID</span>
+                            <span class="font-mono" style="color: var(--accent-purple); font-weight: 800; font-size: 1.25rem;" id="cs-val-number">CS-1004</span>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; font-size: 0.85rem; background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">1. ASSOCIATED FIR DETAILS:</span> <strong id="cs-fir-details" style="color: #fff;"></strong></div>
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">2. COMPLAINANT DETAILS:</span> <strong id="cs-complainant-details" style="color: #fff;"></strong></div>
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">3. VICTIM DETAILS:</span> <strong id="cs-victim-details" style="color: #fff;"></strong></div>
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">4. ACCUSED DETAILS:</span> <strong id="cs-accused-details" style="color: #fff;"></strong></div>
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">5. ACCUSED STATUS:</span> <strong id="cs-accused-status" style="color: var(--color-warning);"></strong></div>
+                        <div><span style="color: var(--color-muted); display:block; font-size:0.75rem;">6. APPLICABLE LEGAL SECTIONS:</span> <strong id="cs-applicable-sections" style="color: var(--accent-cyan); font-family: monospace;"></strong></div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem; font-size: 0.88rem;">
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: #fff; display: block; margin-bottom: 0.4rem;"><i class="fas fa-file-lines text-indigo-400"></i> 7. Incident Description</strong>
+                            <div id="cs-incident-desc" style="color: var(--color-text); line-height: 1.5;"></div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: #fff; display: block; margin-bottom: 0.4rem;"><i class="fas fa-magnifying-glass text-indigo-400"></i> 8. Key Investigation Findings</strong>
+                            <div id="cs-findings" style="color: var(--color-text); line-height: 1.5;"></div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: #fff; display: block; margin-bottom: 0.4rem;"><i class="fas fa-folder-open text-indigo-400"></i> 9. Evidence Details & Seized Materials</strong>
+                            <div id="cs-evidence-details" style="color: var(--color-text); line-height: 1.5; margin-bottom: 0.5rem;"></div>
+                            <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.5rem;">
+                                <span style="font-size: 0.75rem; color: var(--color-muted);">Seized Materials/Documents:</span>
+                                <div id="cs-seized-materials" style="color: #fff; font-weight: 600; margin-top: 0.2rem;"></div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: #fff; display: block; margin-bottom: 0.4rem;"><i class="fas fa-comments text-indigo-400"></i> 10. Witness List & Statements</strong>
+                            <div id="cs-witness-statements" style="color: var(--color-text); line-height: 1.5;"></div>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: #fff; display: block; margin-bottom: 0.4rem;"><i class="fas fa-microscope text-indigo-400"></i> 11. Medical & Forensic Reports</strong>
+                            <div id="cs-forensic-reports" style="color: var(--color-text); line-height: 1.5;"></div>
+                        </div>
+
+                        <div style="background: rgba(90,92,245,0.08); border: 1px solid rgba(90,92,245,0.3); padding: 1rem; border-radius: 8px;">
+                            <strong style="color: var(--accent-cyan); display: block; margin-bottom: 0.4rem;"><i class="fas fa-circle-check"></i> 12. Final Investigation Conclusion</strong>
+                            <div id="cs-final-conclusion" style="color: #fff; font-weight: 600; line-height: 1.5;"></div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 3rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="btn-cs-download"><i class="fas fa-file-pdf text-red-500"></i> Download CS PDF</button>
+                        <button type="button" class="btn btn-primary" id="btn-cs-submit" style="background: linear-gradient(135deg, var(--accent-purple), #7e22ce);">
+                            Submit Docket to Court <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: MAGISTRATE COURT TRIAL -->
+            <div id="panel-tab-7" class="tab-panel hidden">
+                <div class="glass-panel" style="max-width: 650px; margin: 0 auto; text-align: center; padding: 3rem 2rem;">
+                    <i class="fas fa-building-columns text-purple-400" style="font-size: 4rem; margin-bottom: 2rem;"></i>
+                    <h2 style="color: #ffffff; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.5rem;">Magistrate Court trial room</h2>
+                    <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 2rem;">Docket details received by public prosecution. Magistrate trial procedures initiated.</p>
+                    
+                    <div style="background: var(--bg-card-sub); padding: 1.25rem; border-radius: 12px; margin-bottom: 2rem; text-align: left; font-size: 0.85rem; line-height: 1.6;">
+                        <div><span style="color: var(--color-muted);">Court Registry Code:</span> <strong style="color: #fff;" id="court-reg-code">CR-MET-12004</strong></div>
+                        <div><span style="color: var(--color-muted);">Assused Criminal:</span> <strong style="color: #fff;" id="court-accused-name"></strong></div>
+                        <div><span style="color: var(--color-muted);">Applied IPC Codes:</span> <strong style="color: #fff;" id="court-applied-ipc"></strong></div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btn-court-proceed" style="width: 100%; background: linear-gradient(to right, var(--primary-blue), var(--accent-purple));">
+                        Predict Case Verdict (AI Engine) <i class="fas fa-brain"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 8: JUDGMENT PREDICTION -->
+            <div id="panel-tab-8" class="tab-panel hidden">
+                <div class="glass-panel" style="max-width: 700px; margin: 0 auto;">
+                    <div style="text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 2rem;">
+                        <span style="font-size: 2rem; color: var(--accent-purple);"><i class="fas fa-gavel"></i></span>
+                        <h2 style="color: #ffffff; font-weight: 800; font-size: 1.6rem; margin-top: 0.5rem;">AI Verdict & Sentencing Predictor</h2>
+                        <p style="color: var(--color-muted); font-size: 0.85rem;">Precedent analytics forecast based on court databases.</p>
+                    </div>
+
+                    <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16,185,129,0.3); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 id="verdict-outcome-title" style="color: var(--color-success); font-weight: 800; font-size: 1.3rem;"><i class="fas fa-balance-scale mr-2"></i> Verdict: Guilty</h3>
+                            <span id="verdict-conf-badge" class="badge-priority-low" style="background: rgba(16,185,129,0.25);">Accuracy: 89.2%</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; font-size: 0.9rem; border-top: 1px solid rgba(16,185,129,0.15); padding-top: 1rem;">
+                            <div><span style="color: var(--color-muted);">Forecast Sentencing:</span> <strong id="verdict-sentence-val" style="color: #fff;"></strong></div>
+                            <div><span style="color: var(--color-muted);">Suggested Penal Fine:</span> <strong id="verdict-fine-val" style="color: #fff;"></strong></div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" id="btn-verdict-download"><i class="fas fa-file-pdf text-red-500"></i> Download Verdict PDF</button>
+                        <button type="button" class="btn btn-primary" id="btn-verdict-proceed">Proceed to Tracking <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 9: CASE TRACKER AND TIMELINE -->
+            <div id="panel-tab-9" class="tab-panel hidden">
+                <div class="grid-2">
+                    <!-- Tracking Timeline -->
+                    <div class="glass-panel">
+                        <div style="margin-bottom: 1.5rem;">
+                            <label for="track-case-select" style="font-weight: 600; display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-muted);">Select active case docket</label>
+                            <select id="track-case-select" class="form-control" style="background: #0d0f17;">
+                                <!-- Filled dynamically -->
+                            </select>
+                        </div>
+
+                        <div id="track-card-empty" style="padding: 3rem; text-align: center; color: var(--color-muted);">
+                            <span style="font-size: 2.5rem;"><i class="fas fa-route"></i></span>
+                            <h3 class="mt-4 text-white">Select a Case reference</h3>
+                            <p class="text-sm mt-1">Select an active reference key above to query the secure distributed case ledger.</p>
+                        </div>
+
+                        <div id="track-card-content" class="hidden">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                                <div>
+                                    <span class="text-xs text-slate-400">CASE REFERENCE</span>
+                                    <h3 id="track-case-id" class="text-white font-mono font-bold"></h3>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span class="text-xs text-slate-400">DATE REGISTERED</span>
+                                    <div id="track-reg-date" class="text-white text-sm"></div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; margin-bottom: 1.5rem;">
+                                <div>Category: <span id="track-category" class="font-semibold text-white"></span></div>
+                                <div>Priority Rating: <span id="track-priority"></span></div>
+                                <div style="grid-column: span 2;">Current Status: <strong id="track-status" class="text-blue-400"></strong></div>
+                            </div>
+
+                            <div style="margin-top: 2rem;">
+                                <h4 style="margin-bottom: 1.5rem; font-size: 1rem; color: #fff;"><i class="fas fa-list-ol text-blue-400 mr-2"></i> Case History Timeline</h4>
+                                <div id="tracking-timeline-flow" class="timeline-flow">
+                                    <!-- Dynamic timeline -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerts & SMS Logs panel -->
+                    <div class="glass-panel">
+                        <h2 class="glass-panel-title"><i class="fas fa-bell"></i> Live Notifications & SMS Dispatch Logs</h2>
+                        <div id="track-docs-container" style="margin-bottom: 1.5rem;">
+                            <!-- PDF downloads for CSR, FIR, and Charge Sheet -->
+                        </div>
+                        <div id="track-notif-logs" style="max-height: 400px; overflow-y: auto; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div class="p-3 bg-slate-900 border border-slate-800 text-xs text-slate-400 rounded text-center">
+                                Notifications log is clean. Updates will appear in real-time as steps progress.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- TOAST ALERTS DRAWER -->
+    <div id="app-notification" class="toast-notification translate-y-24 opacity-0">
+        <!-- filled dynamically -->
+    </div>
+
+    <!-- scripts -->
+    <script src="js/nlp.js"></script>
+    <script src="js/face_rec.js"></script>
+    <script src="js/pdf_gen.js"></script>
+    <script src="js/complaint.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
